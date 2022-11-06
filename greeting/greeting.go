@@ -2,10 +2,16 @@ package greeting
 
 import "fmt"
 
-func Hello() {
-	fmt.Println("Hello world!!!!")
+func Hello(name string) string {
+	if name == "" {
+		return "Hello, Guest"
+	}
+	return fmt.Sprintf("Hello, %s", name)
 }
 
-func Hi() {
-	fmt.Println("Hi!")
+func Hi(name string) string {
+	if name == "" {
+		return "Hello, Guest"
+	}
+	return fmt.Sprintf("Hi, %s", name)
 }
