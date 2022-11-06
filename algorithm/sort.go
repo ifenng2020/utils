@@ -1,15 +1,4 @@
-package main
-
-import "fmt"
-
-func main() {
-	sortArr := []int{6, 4, 12, 3, 1, 5, 8}
-	//SortChoose(sortArr)
-	SortInsert(sortArr)
-	for i, v := range sortArr {
-		fmt.Println(i, v)
-	}
-}
+package algorithm
 
 // SortChoose sort method of choose
 func SortChoose(unsort []int) {
