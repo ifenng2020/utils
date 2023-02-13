@@ -1,52 +1,28 @@
 package main
 
-import (
-	"fmt"
-	"sync"
-)
+import "fmt"
 
-var (
-	catCh  = make(chan struct{})
-	fishCh = make(chan struct{})
-	dogCh  = make(chan struct{})
-)
-var wg sync.WaitGroup
-
-func cat() {
-	for range catCh {
-		fmt.Print("cat ")
-		dogCh <- struct{}{}
-	}
+type foo struct {
+	name string
+	age  int
 }
 
-func dog() {
-	for range dogCh {
-		fmt.Print("dog ")
-		fishCh <- struct{}{}
-	}
+func (f foo) setNameByValueReceiver(n string) {
+	f.name = n
+	fmt.Println("nothing happened")
 }
 
-func fish() {
-	defer wg.Done()
-	i := 0
-	for range fishCh {
-		i++
-		fmt.Print("fish ")
-		fmt.Println(i)
-		if i == 100 {
-			break
-		}
-
-		catCh <- struct{}{}
-	}
-
+func (p *foo) setNameByPointerReceiver(n string) {
+	p.name = n
 }
 
 func main() {
-	wg.Add(1)
-	go dog()
-	go cat()
-	go fish()
-	catCh <- struct{}{}
-	wg.Wait()
+	f := foo{
+		name: "tony",
+		age:  1,
+	}
+	f.setNameByValueReceiver("tommy")
+	fmt.Println(f)
+	f.setNameByPointerReceiver("jimmy")
+	fmt.Println(f)
 }
